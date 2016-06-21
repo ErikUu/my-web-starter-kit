@@ -30,7 +30,7 @@ gulp.task("concatScripts" ,function () {
 });
 
 //Bower
-gulp.task('bower', function() {
+gulp.task('bower', ["bowerInstall"], function() {
     return gulp.src(mainBowerFiles())
         .pipe(gulp.dest('app/lib'))
 });
@@ -74,7 +74,7 @@ gulp.task("serve", function () {
 
 //Remove dist folder and all compiled/minified files
 gulp.task("clean", function () {
-    del(["dist", config.pathAssets + "/styles/main.css*", config.pathAssets + "/js/main*.js*"]);
+    del(["dist", config.pathAssets + "/styles/main.css*", config.pathAssets + "/js/main*.js*", "./bower_components", config.pathAppRoot + "/lib"]);
 });
 
 //todo: Concat js/css lib with assets
