@@ -1,0 +1,93 @@
+nav[class^="simple"]{
+
+  margin: 0;
+  width: 100%;
+  position: relative;
+
+  transition: all .2s ease-in-out;
+
+  ul{
+
+    width: 100%;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+
+    li{
+
+      position: relative;
+      display: block;
+      width: 100%;
+      margin-right: 80px;
+
+
+      &:last-child{
+        margin-right: 0;
+      }
+
+      a.underlined {
+        padding: 10px 0;
+        text-decoration: none;
+        color: $default-text;
+        font-weight: 400;
+
+        &:before {
+          position: absolute;
+          content: "";
+          bottom: -6px;
+          left: 0;
+
+          height: 2px;
+          width: 100%;
+
+          background-color: #666;
+          visibility: hidden;
+          transform: scaleX(0);
+
+          @include transition(all .2s ease-in-out);
+        }
+
+        &:hover:before {
+          visibility: visible;
+          transform: scaleX(1);
+        }
+
+      }
+
+      @include bp-small {
+        display: inline-block;
+        width: auto;
+      }
+
+    }
+
+  }
+
+
+  .side-buttons {
+
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    .register {
+      margin-left: 10px;
+    }
+
+  }
+
+}
+
+nav.simple-fixed.sticky{
+  background-color: #FFF;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+}
+
+nav.simple-fixed{
+  background-color: rgba(255, 255, 255, 0);
+  position: fixed;
+  z-index: 500;
+  left: 50%;
+  transform: translateX(-50%);
+}

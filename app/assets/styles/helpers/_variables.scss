@@ -1,0 +1,31 @@
+
+/****************
+COLORS
+*****************/
+$light-blue: #29BAFB;
+$dark-blue: #00ACDE;
+$gray-green: #576366;
+$red: #EA5151;
+$geraldine: #FF8787;
+$dark-geraldine: #ef7171;
+
+
+/****************
+COLOR SCHEME
+*****************/
+$primary-color: white;
+$secondary: $geraldine;
+
+
+/****************
+COMPONENT COLORS
+*****************/
+
+//buttons
+$btn-default-text-color: white;
+$btn-default: $secondary;
+$btn-default-hover: $dark-geraldine;
+
+
+//text
+$default-text: $gray-green;

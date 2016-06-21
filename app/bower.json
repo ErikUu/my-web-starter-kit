@@ -1,0 +1,22 @@
+{
+  "name": "my_portfolio",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "ErikUu <erik.uusitalo@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "particles.js": "^2.0.0",
+    "animate.css": "^3.5.2"
+  }
+}

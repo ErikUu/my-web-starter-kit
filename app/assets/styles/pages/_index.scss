@@ -1,0 +1,16 @@
+.landing {
+  text-align: center;
+  position: relative;
+  height: 100vh;
+  background-color: rgb(250, 250, 250);
+
+  .card {
+    width: 300px;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+
+
+  }
+}

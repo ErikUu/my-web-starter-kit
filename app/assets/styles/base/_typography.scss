@@ -1,0 +1,67 @@
+/*
+DEFAULTs
+*/
+a {
+  text-decoration: none;
+}
+
+strong {
+  font-weight: 700;
+}
+
+
+span.light-text{
+  font-weight: 300;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+}
+
+/*
+PARAGRAPHS
+*/
+p {
+
+  font-size: 16px;
+  line-height: 27px;
+  color: $default-text;
+
+  a {
+    position: relative;
+    color: $red;
+
+    &:before {
+      position: absolute;
+      content: "";
+      bottom: -3px;
+      left: 0;
+
+      height: 1px;
+      width: 100%;
+
+      background-color: $red;
+
+      @include opacity(0);
+      @include transition(all .2s ease-in-out);
+    }
+
+    &:hover:before {
+      @include opacity(1);
+    }
+
+  }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
