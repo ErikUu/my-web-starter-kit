@@ -7,37 +7,54 @@ var gulp        = require("gulp"),
     sass        = require("gulp-sass"),
     maps        = require("gulp-sourcemaps"),
     del         = require("del"),
-    browserSync = require('browser-sync').create();
+    browserSync = require('browser-sync').create(),
+    bower       = require('gulp-bower'),
+    mainBowerFiles = require('main-bower-files');
 
-//Paths
-var PATH_ASSETS   = "app/assets",
-    PATH_APP_ROOT = "app";
+
+//Configurations
+var config = {
+    bowerDir    : './bower_components',
+    pathAssets  : "app/assets",
+    pathAppRoot : "app"
+};
 
 //Concat and map scripts
 gulp.task("concatScripts" ,function () {
-    return gulp.src([PATH_ASSETS + "/js/**/*.js", "!" + PATH_ASSETS + "/js/main*.js*"])
+    return gulp.src([config.pathAssets + "/js/**/*.js", "!" + config.pathAssets + "/js/main*.js*"])
         .pipe(maps.init())
         .pipe(concat("main.js"))
         .pipe(maps.write("/."))
-        .pipe(gulp.dest(PATH_ASSETS + "/js"))
-        .pipe(browserSync.stream());;
+        .pipe(gulp.dest(config.pathAssets + "/js"))
+        .pipe(browserSync.stream());
+});
+
+//Bower
+gulp.task('bower', function() {
+    return gulp.src(mainBowerFiles())
+        .pipe(gulp.dest('app/lib'))
+});
+
+gulp.task('bowerInstall', function() {
+    return bower()
+        .pipe(gulp.dest(config.bowerDir))
 });
 
 //Minify scripts
 gulp.task("minifyScripts", ["concatScripts"], function () {
-    return gulp.src(PATH_ASSETS + "/js/main.js")
+    return gulp.src(config.pathAssets + "/js/main.js")
         .pipe(uglify())
         .pipe(rename("main.min.js"))
-        .pipe(gulp.dest(PATH_ASSETS + "/js"));
+        .pipe(gulp.dest(config.pathAssets + "/js"));
 });
 
 //Concat, compile and maps sass
 gulp.task("compileSass", function () {
-    return gulp.src(PATH_ASSETS + "/styles/main.scss")
+    return gulp.src(config.pathAssets + "/styles/main.scss")
         .pipe(maps.init())
         .pipe(sass())
         .pipe(maps.write("./"))
-        .pipe(gulp.dest(PATH_ASSETS + "/styles"))
+        .pipe(gulp.dest(config.pathAssets + "/styles"))
         .pipe(browserSync.stream());
 });
 
@@ -49,20 +66,21 @@ gulp.task("serve", function () {
         notify: false
     });
 
-    gulp.watch(PATH_ASSETS + "/styles/**/*.scss", ["compileSass"]);
-    gulp.watch(PATH_ASSETS + "/js/*.js", ["concatScripts"]).on('change', browserSync.reload);
-    gulp.watch(PATH_APP_ROOT + "/*.html").on('change', browserSync.reload);
+    gulp.watch(config.pathAssets + "/styles/**/*.scss", ["compileSass"]);
+    gulp.watch(config.pathAssets + "/js/*.js", ["concatScripts"]).on('change', browserSync.reload);
+    gulp.watch(config.pathAppRoot + "/*.html").on('change', browserSync.reload);
 
 });
 
 //Remove dist folder and all compiled/minified files
 gulp.task("clean", function () {
-    del(["dist", PATH_ASSETS + "/styles/main.css*", PATH_ASSETS + "/js/main*.js*"]);
+    del(["dist", config.pathAssets + "/styles/main.css*", config.pathAssets + "/js/main*.js*"]);
 });
 
+//todo: Concat js/css lib with assets
 //Builds entire project and stores it in dist folder
 gulp.task("build", ["minifyScripts", "compileSass"], function () {
-    return gulp.src([ PATH_ASSETS + "/styles/main.css", PATH_ASSETS + "/js/main.min.js", PATH_APP_ROOT + "/*.html", "img/**", PATH_APP_ROOT + "/bower_components/jquery/dist/jquery.js"], { base: "./app" })
+    return gulp.src([ config.pathAssets + "/styles/main.css", config.pathAssets + "/js/main.min.js", config.pathAppRoot + "/*.html", "img/**", config.pathAppRoot + "/bower_components/jquery/dist/jquery.js"], { base: "./app" })
         .pipe(gulp.dest("dist"));
 });
 
